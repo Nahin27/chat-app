@@ -1,5 +1,10 @@
 import { postgres } from "../deps.js";
 
-const sql = postgres({}); // injecting config from env
+let sql;
+if (Deno.env.get("DATABASE_URL")) {
+  sql = postgres(Deno.env.get("DATABASE_URL"));
+} else {
+  sql = postgres({});
+}
 
 export { sql };
